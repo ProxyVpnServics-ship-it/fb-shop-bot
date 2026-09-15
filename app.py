@@ -135,28 +135,41 @@ def handle_incoming_message(sender_id, text):
     get_user(sender_id)
     text_lower = text.lower() if text else ""
     
-    if text_lower in ["/start", "start", "hi", "hello", "🏠 main menu", "buy_product"]:
+    if text_lower in ["/start", "start", "hi", "hello", "🏠 main menu", "buy_product", "main_menu"]:
         send_facebook_message(
             sender_id, 
             "🌸 Welcome to our Shop! Select from the menu below:", 
             quick_replies=get_main_menu_buttons()
         )
-    elif text == "🛍️ Buy Product":
+    elif text in ["🛍️ Buy Product", "BUY_PRODUCT"]:
+        proxy_categories = [
+            {"content_type": "text", "title": "🌐 ISP Proxy", "payload": "ISP_PROXY"},
+            {"content_type": "text", "title": "📱 Mobile Proxy", "payload": "MOBILE_PROXY"},
+            {"content_type": "text", "title": "🏠 Residential", "payload": "RESIDENTIAL"},
+            {"content_type": "text", "title": "🏠 Main Menu", "payload": "MAIN_MENU"}
+        ]
         send_facebook_message(
             sender_id, 
-            "🌐 Proxy / VPN / Premium Apps / AI Tools / Gift Card কিনতে আমাদের মেনু ব্যবহার করুন।"
+            "🌐 আমাদের কাছে বিভিন্ন ধরনের প্রিমিয়াম প্রক্সি ও ভিপিএন উপলব্ধ রয়েছে। নিচে থেকে আপনার পছন্দের ক্যাটাগরি সিলেক্ট করুন:", 
+            quick_replies=proxy_categories
         )
-    elif text == "👤 Profile":
+    elif text in ["ISP_PROXY", "MOBILE_PROXY", "RESIDENTIAL"]:
+        send_facebook_message(
+            sender_id, 
+            "📦 আপনি নির্বাচিত ক্যাটাগরি থেকে প্রক্সি কিনতে চান। প্রতি জিবি বা আইপি-র রেট জানতে অ্যাডমিনের সাথে যোগাযোগ করুন অথবা ব্যালেন্স রিচার্জ করুন।",
+            quick_replies=get_main_menu_buttons()
+        )
+    elif text in ["👤 Profile", "PROFILE"]:
         bal, total_buy = get_user(sender_id)
         profile_text = f"👤 Your Profile Information:\n\n🆔 User ID: {sender_id}\n💰 Balance: {bal:.2f} BDT\n🛍️ Total Purchases: {total_buy}"
         send_facebook_message(sender_id, profile_text, quick_replies=get_main_menu_buttons())
-    elif text == "💵 Dollar Buy/Sell":
+    elif text in ["💵 Dollar Buy/Sell", "DOLLAR_MENU"]:
         send_facebook_message(sender_id, "💸 Welcome to the Dollar Buy/Sell Zone!\n1. Want to Buy Dollar (Rate: 130 Tk)\n2. Want to Sell Dollar (Rate: 120 Tk)")
-    elif text == "💰 Deposit":
+    elif text in ["💰 Deposit", "DEPOSIT"]:
         send_facebook_message(sender_id, "💎 bKash/Nagad/Rocket Personal:\n01935164417\n\nSend Money করে ট্রানজেকশন আইডি (TrxID) বা স্ক্রিনশট দিন।")
-    elif text == "📦 My Orders":
+    elif text in ["📦 My Orders", "MY_ORDERS"]:
         send_facebook_message(sender_id, "🛒 আপনার অর্ডার এবং রিচার্জ হিস্ট্রি দেখতে এখানে ক্লিক করুন।")
-    elif text == "☎️ Support":
+    elif text in ["☎️ Support", "SUPPORT"]:
         send_facebook_message(sender_id, "☎️ কাস্টমার সাপোর্ট:\n💬 Admin Support: m.me/proxyvpnservice17\n⏰ সার্ভিস টাইম: ২৪/৭ ঘন্টা")
     else:
         send_facebook_message(sender_id, "দয়া করে নিচের মেনু থেকে অপশন সিলেক্ট করুন:", quick_replies=get_main_menu_buttons())
