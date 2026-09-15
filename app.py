@@ -1,9 +1,6 @@
 import os
-import threading
-import time
 import requests
 from flask import Flask, request
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # ⚠️ ফেসবুক পেজ টোকেন ও অ্যাডমিন আইডি
 PAGE_ACCESS_TOKEN = os.getenv(
@@ -112,7 +109,7 @@ def webhook():
                 return challenge, 200
             else:
                 return "Verification failed", 403
-        return "Bot is running and alive!", 200
+        return "Facebook Bot is alive and running smoothly!", 200
 
     elif request.method == "POST":
         data = request.json
@@ -164,26 +161,7 @@ def handle_incoming_message(sender_id, text):
         send_facebook_message(sender_id, "দয়া করে নিচের মেনু থেকে অপশন সিলেক্ট করুন:", quick_replies=get_main_menu_buttons())
 
 
-# --- Render Health Check Server ---
-class HealthCheckHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/plain")
-        self.end_headers()
-        self.wfile.write(b"Facebook Bot is alive and running on Render!")
-
-    def log_message(self, format, *args):
-        return
-
-def run_fake_server():
-    port = int(os.environ.get("PORT", 8080))
-    HTTPServer.allow_reuse_address = True
-    server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
-    server.serve_forever()
-
-
 if __name__ == "__main__":
-    threading.Thread(target=run_fake_server, daemon=True).start()
-    port = int(os.environ.get("PORT", 8080))
-    print(f"Starting Facebook Bot Server on port {port}...")
+    port = int(os.environ.get("PORT", 10000))
+    print(f"Starting Flask Server on port {port}...")
     app.run(host="0.0.0.0", port=port)
