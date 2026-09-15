@@ -133,8 +133,9 @@ def webhook():
 
 def handle_incoming_message(sender_id, text):
     get_user(sender_id)
+    text_lower = text.lower() if text else ""
     
-    if text in ["/start", "🏠 Main Menu", "BUY_PRODUCT"]:
+    if text_lower in ["/start", "start", "hi", "hello", "🏠 main menu", "buy_product"]:
         send_facebook_message(
             sender_id, 
             "🌸 Welcome to our Shop! Select from the menu below:", 
