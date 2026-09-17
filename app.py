@@ -4,7 +4,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-# নতুন আপডেট করা ফেসবুক পেজ টোকেন ও অ্যাডমিন আইডি
+# ফেসবুক পেজ টোকেন ও অ্যাডমিন আইডি
 PAGE_ACCESS_TOKEN = os.getenv(
     "PAGE_ACCESS_TOKEN", 
     "EAAO6zUBiVl8BSl4ogMx1dhZCzbZA4kI2eSpndJDw7gDabclQE9bb82RiHy6YedctrhbMROsZCteYlT9qzujpeLwVxwxhZCzpHVewXuZBUVjziPXttUljWs3IFPi4Pj3j7yRErgOjmVSgZAXwJgho5h7XQLZBxrXLkCNa4SOwIWfUW5nYkdsFCGXXMTKTAZBURJ9fETeKX6jMmI8kYIrfZB8qXfs0YfYk1oG9H"
